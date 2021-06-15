@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <title>Anbox Streaming SDK Example</title>
+</head>
+<body>
+<script type="module">
+	import {AnboxStream, AnboxStreamGatewayConnector} from './anbox-stream-sdk.js';
+
+	const connector = new AnboxStreamGatewayConnector({
+		url: 'https://gateway-url.net',
+		authToken: 'AgEUYW5ib3gtc3RyZWFtLWdhdGV3YXkCBGVuem8AAhQyMDIxLTA2LTE0VDExOjM5OjQ4WgAABiBytXo6Za8XX5EXkwzN4Tu-UKoaFukQsPorz5fD1tIStA',
+		session: {
+			app: "com.foo.bar",
+		},
+	});
+
+	let stream = new AnboxStream({
+		connector: connector,
+		targetElement: "anbox-stream",
+		screen: {
+			width: 1280,
+			height: 720,
+			fps: 25,
+		},
+		controls: {
+			keyboard: true
+		},
+		callbacks: {
+			error: error => {
+				console.log("AnboxStream failed: ", error);
+			}
+		}
+	});
+
+	document.getElementById("start-button").onclick = stream.connect
+</script>
+Hello World
+<button id="start-button">Start</button>
+<div id="anbox-stream"></div>
+</body>
